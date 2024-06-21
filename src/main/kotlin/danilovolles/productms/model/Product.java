@@ -1,4 +1,4 @@
-package danilovolles.productms;
+package danilovolles.productms.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
