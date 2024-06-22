@@ -4,23 +4,21 @@ import danilovolles.productms.dto.ProductDTO;
 import danilovolles.productms.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
 
     @Autowired
     private ProductService service;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<ProductDTO> createProduct(@RequestBody @Valid ProductDTO request){
         Optional<ProductDTO> response = service.create(request);
         if(response.isPresent()){
@@ -43,5 +41,25 @@ public class ProductController {
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDTO> updateProduct(
+            @PathVariable("id") Long id,
+            @RequestBody @Valid ProductDTO request
+    ){
+        Optional<ProductDTO> response = service.updateProductById(id, request);
+        if (response.isPresent()) {
+            return ResponseEntity.ok(response.get());
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> inactiveProduct(@PathVariable("id") Long id){
+        boolean inactive = service.inactiveProductById(id);
+        return inactive
+                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
