@@ -14,6 +14,7 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
@@ -41,6 +42,19 @@ public class ProductServiceImpl implements ProductService {
         });
 
         return responses;
+    }
+
+    @Override
+    public Optional<ProductDTO> getProductById(Long id) {
+
+        Optional<Product> product = productRepository.findById(id);
+
+        // return product.map(value -> modelMapper.map(value, ProductDTO.class)); // Pode finalizar aqui
+        if (product.isPresent()){
+            return Optional.of(modelMapper.map(product.get(), ProductDTO.class));
+        }
+
+        return Optional.empty();
     }
 
 
