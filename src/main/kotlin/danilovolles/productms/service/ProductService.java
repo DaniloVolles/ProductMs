@@ -11,4 +11,6 @@ public interface ProductService {
     Optional<ProductDTO> create(ProductDTO request);
     List<ProductDTO> getAllProducts();
     Optional<ProductDTO> getProductById(Long id);
+    boolean inactiveProductById(Long id);
+    boolean deleteProductById(Long id);
 }

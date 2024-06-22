@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +56,27 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    public boolean inactiveProductById(Long id) {
+        Optional<Product> product = productRepository.findById(id);
+        if (product.isPresent()){
+            product.get().setAvailable(false);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteProductById(Long id) {
+        Optional<Product> product = productRepository.findById(id);
+        if (product.isPresent()){
+            productRepository.delete(product.get());
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

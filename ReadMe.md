@@ -6,7 +6,7 @@
 - GET: getAll()
 - GET /{id} : getById()
 - PUT /{id} : updateById()
-- DELETE /{id} : delete()
+- DELETE /{id} : inactive()
 
 ## Model
 ```json
