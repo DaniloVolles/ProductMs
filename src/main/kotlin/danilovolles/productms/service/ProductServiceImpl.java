@@ -58,6 +58,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Optional<ProductDTO> updateProductById(Long id, ProductDTO request) {
+        Optional<Product> product = productRepository.findById(id);
+        if (product.isPresent()){
+            product.get().setName(request.getName());
+            product.get().setPrice(request.getPrice());
+            product.get().setDescription(request.getDescription());
+            productRepository.save(product.get());
+            return Optional.of(modelMapper.map(product.get(), ProductDTO.class));
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public boolean inactiveProductById(Long id) {
         Optional<Product> product = productRepository.findById(id);
         if (product.isPresent()){

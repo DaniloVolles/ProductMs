@@ -10,6 +10,7 @@ public interface ProductService {
     Optional<ProductDTO> create(ProductDTO request);
     List<ProductDTO> getAllProducts();
     Optional<ProductDTO> getProductById(Long id);
+    Optional<ProductDTO> updateProductById(Long id, ProductDTO request);
     boolean inactiveProductById(Long id);
     boolean deleteProductById(Long id);
 }
